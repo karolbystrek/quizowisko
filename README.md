@@ -1,4 +1,4 @@
-<h1 align="center">Master your material with a unique, hand-drawn interactive quiz experience.</h1>
+<h1 align="center">Master your material with simple, hand-drawn interactive quiz experience.</h1>
 
 <p align="center">
   <img src="docs/assets/hero-screenshot.png" alt="Quizowisko Hero Screenshot" width="800">
