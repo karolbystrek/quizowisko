@@ -40,10 +40,11 @@ export interface ButtonProps
   asChild?: boolean
   roughShape?: 'rectangle' | 'circle' | 'rounded';
   roughCornerRadius?: number;
+  stroke?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, roughShape, roughCornerRadius, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, roughShape, roughCornerRadius, stroke, ...props }, ref) => {
     if (asChild) {
       return (
         <Slot
@@ -81,6 +82,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <RoughOverlay 
             roughness={2} 
             strokeWidth={2} 
+            stroke={stroke}
             shape={shape}
             cornerRadius={radius}
             seed={seed}

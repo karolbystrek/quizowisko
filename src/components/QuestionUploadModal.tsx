@@ -138,6 +138,7 @@ export const QuestionUploadModal: React.FC<QuestionUploadModalProps> = ({ onUplo
                                 )}
                                 roughness={2}
                                 strokeWidth={2}
+                                stroke={theme === 'dark' ? '#ffffff' : '#000000'}
                                 strokeLineDash={[8, 8]}
                                 fillStyle="hachure"
                                 fill={isDragging ? (theme === 'dark' ? '#3f3f46' : '#e4e4e7') : "transparent"}

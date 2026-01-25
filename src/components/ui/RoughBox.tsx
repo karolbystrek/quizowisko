@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useLayoutEffect, useState } from 'react';
 import rough from 'roughjs';
 import { cn } from '@/lib/utils';
 import { useTheme } from '../ThemeProvider';
@@ -24,7 +24,7 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
   className,
   roughness = 1.5,
   bowing = 1,
-  stroke,
+  stroke = 'currentColor',
   strokeWidth = 1,
   strokeLineDash,
   strokeLineDashOffset,
@@ -61,7 +61,7 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!canvasRef.current || dimensions.width === 0 || dimensions.height === 0) return;
 
     const canvas = canvasRef.current;
@@ -69,7 +69,6 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
 
     const parent = canvas.parentElement;
     if (parent) {
-      // Use offsetWidth/Height to cover borders if any
       canvas.width = parent.offsetWidth;
       canvas.height = parent.offsetHeight;
     }
@@ -79,8 +78,16 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    // Default stroke based on theme if not provided
-    const effectiveStroke = stroke || (theme === 'dark' ? '#ffffff' : '#000000');
+    // Resolve stroke color
+    let effectiveStroke = stroke;
+    if (!effectiveStroke || effectiveStroke === 'currentColor') {
+      if (canvas.parentElement) {
+        // We get the computed color. If there's a transition, we might get an intermediate value.
+        effectiveStroke = getComputedStyle(canvas.parentElement).color;
+      } else {
+        effectiveStroke = theme === 'dark' ? '#ffffff' : '#000000';
+      }
+    }
 
     const config: any = {
       roughness,
@@ -91,16 +98,14 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
       fillStyle,
       fillWeight,
       hachureGap,
+      seed: seed ?? 1,
     };
-    
+
     if (strokeLineDash) {
         config.strokeLineDash = strokeLineDash;
     }
     if (strokeLineDashOffset !== undefined) {
         config.strokeLineDashOffset = strokeLineDashOffset;
-    }
-    if (seed !== undefined) {
-        config.seed = seed;
     }
 
     const w = canvas.width;
@@ -143,10 +148,6 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
 
     if (drawCheck) {
         // Draw a checkmark in the center
-        // Points relative to width/height
-        // Start: 25% x, 50% y
-        // Mid: 45% x, 75% y
-        // End: 80% x, 20% y
         const x1 = w * 0.25;
         const y1 = h * 0.55;
         const x2 = w * 0.45;
@@ -154,11 +155,10 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
         const x3 = w * 0.8;
         const y3 = h * 0.2;
         
-        // Use a linear path for the check
         rc.linearPath([[x1, y1], [x2, y2], [x3, y3]], {
             ...config,
-            strokeWidth: (config.strokeWidth || 1) * 2, // Make it bolder
-            roughness: 2 // Make it sketchy
+            strokeWidth: (config.strokeWidth || 1) * 2,
+            roughness: 2
         });
     }
 
@@ -194,6 +194,8 @@ export const RoughBox = React.forwardRef<HTMLDivElement, RoughBoxProps>(({
   drawCheck,
   ...props
 }, ref) => {
+  const { theme } = useTheme();
+  
   return (
     <div 
       ref={ref} 

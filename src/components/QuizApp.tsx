@@ -3,7 +3,7 @@ import { useQuiz } from "@/hooks/useQuiz";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { ArrowRight, RotateCcw, Upload } from "lucide-react";
+import { ArrowRight, RotateCcw, Upload, Check, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import DotGrid from "@/components/DotGrid";
 import { useTheme } from "@/components/ThemeProvider";
@@ -87,11 +87,25 @@ export function QuizApp() {
             />
         </div>
         <div className="fixed top-6 right-6 z-50 flex gap-2">
-          <Button variant="ghost" size="icon" onClick={handleRestart} className="rounded-full" roughShape="circle">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={handleRestart} 
+            className="rounded-full" 
+            roughShape="circle"
+            stroke={isDark ? "#ffffff" : "#000000"}
+          >
             <RotateCcw className="h-[1.2rem] w-[1.2rem]" />
             <span className="sr-only">Reset Quiz</span>
           </Button>
-          <Button variant="ghost" size="icon" onClick={() => setIsUploadModalOpen(true)} className="rounded-full" roughShape="circle">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => setIsUploadModalOpen(true)} 
+            className="rounded-full" 
+            roughShape="circle"
+            stroke={isDark ? "#ffffff" : "#000000"}
+          >
             <Upload className="h-[1.2rem] w-[1.2rem]" />
             <span className="sr-only">Upload Questions</span>
           </Button>
@@ -167,11 +181,25 @@ export function QuizApp() {
 
       {/* Top Controls */}
       <div className="fixed top-6 right-6 z-50 flex gap-2">
-        <Button variant="ghost" size="icon" onClick={handleRestart} className="rounded-full" roughShape="circle">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={handleRestart} 
+          className="rounded-full" 
+          roughShape="circle"
+          stroke={isDark ? "#ffffff" : "#000000"}
+        >
           <RotateCcw className="h-[1.2rem] w-[1.2rem]" />
           <span className="sr-only">Reset Quiz</span>
         </Button>
-        <Button variant="ghost" size="icon" onClick={() => setIsUploadModalOpen(true)} className="rounded-full" roughShape="circle">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={() => setIsUploadModalOpen(true)} 
+          className="rounded-full" 
+          roughShape="circle"
+          stroke={isDark ? "#ffffff" : "#000000"}
+        >
           <Upload className="h-[1.2rem] w-[1.2rem]" />
           <span className="sr-only">Upload Questions</span>
         </Button>
@@ -182,14 +210,27 @@ export function QuizApp() {
       <div className="flex-1 flex flex-col justify-center w-full max-w-4xl mx-auto p-6 md:p-12 z-10 relative">
 
         <div className="animate-in slide-in-from-bottom-8 duration-500 w-full">
-          {/* Progress & Question Number */}
+          {/* Progress & Statistics */}
           <div className="mb-8 flex justify-between items-end border-b-2 border-border/60 pb-4">
-            <span className="text-sm font-bold tracking-widest uppercase text-muted-foreground">
-              Question {currentQuestionIndex + 1}
-            </span>
-            <span className="text-sm font-medium text-muted-foreground/60">
-              of {totalQuestions}
-            </span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-sm font-bold tracking-widest uppercase text-muted-foreground">
+                Question {currentQuestionIndex + 1}
+              </span>
+              <span className="text-sm font-medium text-muted-foreground/60">
+                of {totalQuestions}
+              </span>
+            </div>
+            
+            <div className="flex gap-4 items-center">
+              <div className="flex items-center gap-1.5">
+                <Check className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm font-bold text-muted-foreground">{score}</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <X className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm font-bold text-muted-foreground">{wrongQuestions.length}</span>
+              </div>
+            </div>
           </div>
 
           {/* Question Text */}
@@ -205,26 +246,26 @@ export function QuizApp() {
               const isSelected = selectedAnswers.includes(index);
               const isCorrect = answer.isCorrect;
 
-              let strokeColor = "transparent";
-              let bgClass = "bg-secondary/50 hover:bg-secondary/80";
+              let strokeColor = isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)";
+              let bgClass = "bg-secondary/80 hover:bg-secondary/95 shadow-sm";
               let textStyles = "text-muted-foreground group-hover:text-foreground";
 
               if (isSubmitted) {
                 if (isCorrect) {
                    strokeColor = "#22c55e";
-                   bgClass = "bg-green-500/10";
+                   bgClass = "bg-green-500/20";
                    textStyles = "text-foreground font-bold";
                 } else if (isSelected && !isCorrect) {
                    strokeColor = "#ef4444"; // Explicit Red
-                   bgClass = "bg-destructive/10";
+                   bgClass = "bg-destructive/20";
                    textStyles = "text-foreground font-medium";
                 } else {
                    strokeColor = "transparent";
-                   bgClass = "opacity-40 bg-secondary/30 grayscale";
+                   bgClass = "opacity-40 bg-secondary/40 grayscale";
                 }
               } else if (isSelected) {
                  strokeColor = isDark ? "#ffffff" : "#000000"; // Explicit White/Black
-                 bgClass = "bg-primary/10 shadow-sm";
+                 bgClass = "bg-primary/20 shadow-md";
                  textStyles = "text-foreground font-medium";
               }
 
@@ -237,8 +278,9 @@ export function QuizApp() {
                   roughness={2}
                   strokeWidth={2}
                   stroke={strokeColor}
+                  seed={index + 1}
                   className={cn(
-                    "group relative p-5 cursor-pointer transition-all duration-200 rounded-2xl backdrop-blur-[2px]",
+                    "group relative p-5 cursor-pointer transition-all duration-200 rounded-2xl",
                     bgClass,
                     isSubmitted && "cursor-default"
                   )}
@@ -275,20 +317,19 @@ export function QuizApp() {
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-2 pointer-events-none"
           )}>
-               <Button
-                onClick={isSubmitted ? handleNext : handleSubmit}
-                disabled={!isSubmitted && selectedAnswers.length === 0}
-                tabIndex={(selectedAnswers.length > 0 || isSubmitted) ? 0 : -1}
-                size="lg"
-                roughShape="rounded"
-                roughCornerRadius={16}
-                                className={cn(
-                                  "w-full md:w-auto min-w-[200px] h-16 text-lg rounded-2xl transition-all duration-300",
-                                  isSubmitted
-                                    ? "bg-primary text-primary-foreground font-bold active:scale-95"
-                                    : "bg-primary text-primary-foreground font-semibold tracking-wide active:scale-95"
-                                )}              >
-                {isSubmitted ? (
+                                                                           <Button
+                                                                            onClick={isSubmitted ? handleNext : handleSubmit}
+                                                                            disabled={!isSubmitted && selectedAnswers.length === 0}
+                                                                            tabIndex={(selectedAnswers.length > 0 || isSubmitted) ? 0 : -1}
+                                                                            variant="secondary"
+                                                                            size="lg"
+                                                                            roughShape="rounded"
+                                                                            roughCornerRadius={16}
+                                                                            stroke="currentColor"
+                                                                                            className={cn(
+                                                                                              "w-full md:w-auto min-w-[200px] h-16 text-lg rounded-2xl transition-transform active:scale-95 duration-300 shadow-sm border-2 border-transparent font-semibold tracking-wide",
+                                                                                              isSubmitted && "font-bold"
+                                                                                            )}              >                {isSubmitted ? (
                   <span className="flex items-center gap-2">
                     Next Question <ArrowRight className="h-5 w-5" />
                   </span>
