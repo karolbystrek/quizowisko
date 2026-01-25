@@ -2,14 +2,16 @@ import * as React from "react"
 import { Check } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { RoughOverlay } from "./RoughBox"
 
 export interface CheckboxProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   onCheckedChange?: (checked: boolean) => void
+  stroke?: string;
 }
 
 const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ className, checked, onCheckedChange, onChange, ...props }, ref) => {
+  ({ className, checked, onCheckedChange, onChange, stroke, ...props }, ref) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       onCheckedChange?.(e.target.checked)
       onChange?.(e)
@@ -27,12 +29,20 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         />
         <div
           className={cn(
-            "h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center pointer-events-none transition-colors",
-            checked ? "bg-primary text-primary-foreground" : "bg-transparent",
+            "relative h-4 w-4 shrink-0 rounded-sm border border-transparent ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center pointer-events-none",
+            checked ? "text-primary" : "text-muted-foreground",
             className
           )}
         >
-          {checked && <Check className="h-3 w-3 stroke-[3]" />}
+           <RoughOverlay 
+              key={checked ? "checked" : "unchecked"}
+              shape="rounded" 
+              cornerRadius={4} 
+              stroke={stroke || "currentColor"} 
+              strokeWidth={2}
+              roughness={1}
+              drawCheck={checked}
+           />
         </div>
       </div>
     )

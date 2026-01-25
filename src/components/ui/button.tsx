@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import { RoughOverlay } from "./RoughBox"
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -37,17 +38,57 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  roughShape?: 'rectangle' | 'circle' | 'rounded';
+  roughCornerRadius?: number;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
+  ({ className, variant, size, asChild = false, roughShape, roughCornerRadius, ...props }, ref) => {
+    if (asChild) {
+      return (
+        <Slot
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref}
+          {...props}
+        />
+      )
+    }
+
+    // Default shape logic if not provided
+    // If rounded-full is in className, user might want circle. But we can't reliably detect className strings here safely.
+    // So we rely on props.
+    // Default to 'rounded' with small radius if no shape provided, to match rounded-md
+    const shape = roughShape || 'rounded';
+    const radius = roughCornerRadius || 6; // rounded-md is 0.375rem = 6px
+    
+    // Add seed state for hover jiggle
+    const [seed, setSeed] = React.useState(0);
+
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+      <button
+        className={cn(buttonVariants({ variant, size, className }), "relative overflow-hidden border-transparent")}
         ref={ref}
+        onMouseEnter={(e) => {
+            setSeed(1); // Set to specific seed for hover state
+            props.onMouseEnter?.(e);
+        }}
+        onMouseLeave={(e) => {
+            setSeed(0); // Reset to default seed
+            props.onMouseLeave?.(e);
+        }}
         {...props}
-      />
+      >
+        <RoughOverlay 
+            roughness={2} 
+            strokeWidth={2} 
+            shape={shape}
+            cornerRadius={radius}
+            seed={seed}
+        />
+        <span className="relative z-10 flex items-center justify-center gap-2">
+           {props.children}
+        </span>
+      </button>
     )
   }
 )

@@ -19,6 +19,7 @@
     "lucide-react": "^0.545.0",
     "react": "^19",
     "react-dom": "^19",
+    "roughjs": "^4.6.6",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

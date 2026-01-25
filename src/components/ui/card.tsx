@@ -1,17 +1,19 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
+import { RoughBox } from "./RoughBox"
 
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
+  <RoughBox
     ref={ref}
     className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
+      "bg-card text-card-foreground",
       className
     )}
+    roughness={3}
     {...props}
   />
 ))
