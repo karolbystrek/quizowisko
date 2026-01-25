@@ -7,6 +7,8 @@ export interface RoughProps {
   bowing?: number;
   stroke?: string;
   strokeWidth?: number;
+  strokeLineDash?: number[];
+  strokeLineDashOffset?: number;
   fill?: string;
   fillStyle?: 'hachure' | 'solid' | 'zigzag' | 'cross-hatch' | 'dots' | 'sunburst' | 'dashed' | 'zigzag-line';
   fillWeight?: number;
@@ -23,6 +25,8 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
   bowing = 1,
   stroke = 'currentColor',
   strokeWidth = 1,
+  strokeLineDash,
+  strokeLineDashOffset,
   fill,
   fillStyle = 'hachure',
   fillWeight,
@@ -84,6 +88,12 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
       hachureGap,
     };
     
+    if (strokeLineDash) {
+        config.strokeLineDash = strokeLineDash;
+    }
+    if (strokeLineDashOffset !== undefined) {
+        config.strokeLineDashOffset = strokeLineDashOffset;
+    }
     if (seed !== undefined) {
         config.seed = seed;
     }
@@ -147,7 +157,7 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
         });
     }
 
-  }, [dimensions, roughness, bowing, stroke, strokeWidth, fill, fillStyle, fillWeight, hachureGap, shape, cornerRadius, seed, drawCheck]);
+  }, [dimensions, roughness, bowing, stroke, strokeWidth, strokeLineDash, strokeLineDashOffset, fill, fillStyle, fillWeight, hachureGap, shape, cornerRadius, seed, drawCheck]);
 
   return (
     <canvas
@@ -167,6 +177,8 @@ export const RoughBox = React.forwardRef<HTMLDivElement, RoughBoxProps>(({
   bowing,
   stroke,
   strokeWidth,
+  strokeLineDash,
+  strokeLineDashOffset,
   fill,
   fillStyle,
   fillWeight,
@@ -188,6 +200,8 @@ export const RoughBox = React.forwardRef<HTMLDivElement, RoughBoxProps>(({
         bowing={bowing}
         stroke={stroke}
         strokeWidth={strokeWidth}
+        strokeLineDash={strokeLineDash}
+        strokeLineDashOffset={strokeLineDashOffset}
         fill={fill}
         fillStyle={fillStyle}
         fillWeight={fillWeight}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuiz } from "@/hooks/useQuiz";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -7,6 +8,8 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import DotGrid from "@/components/DotGrid";
 import { useThemeObserver } from "@/hooks/useThemeObserver";
 import { RoughBox } from "@/components/ui/RoughBox";
+import { QuestionUploadModal } from "@/components/QuestionUploadModal";
+import type { Question } from "@/types/quiz";
 
 export function QuizApp() {
   const {
@@ -23,9 +26,16 @@ export function QuizApp() {
     handleNext,
     handleRestart,
     handleRetryWrong,
+    loadQuestions,
   } = useQuiz();
 
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(true);
   const isDark = useThemeObserver();
+
+  const onQuestionsUploaded = (questions: Question[]) => {
+    loadQuestions(questions);
+    setIsUploadModalOpen(false);
+  };
 
   // Determine colors based on theme
   // Made light mode dots darker (#a1a1aa - Zinc 400) for better visibility
@@ -47,6 +57,11 @@ export function QuizApp() {
         <div className="animate-pulse text-xl font-medium tracking-widest text-muted-foreground z-10">
           LOADING QUIZ...
         </div>
+        {isUploadModalOpen && (
+          <QuestionUploadModal 
+            onUpload={onQuestionsUploaded} 
+          />
+        )}
       </div>
     );
   }
@@ -101,8 +116,22 @@ export function QuizApp() {
                 Retry Wrong Questions ({wrongQuestions.length})
               </Button>
             )}
+
+            <Button
+              onClick={() => setIsUploadModalOpen(true)}
+              variant="ghost"
+              size="sm"
+              className="mt-4 text-muted-foreground hover:text-foreground"
+            >
+              Upload New Questions
+            </Button>
           </div>
         </div>
+        {isUploadModalOpen && (
+          <QuestionUploadModal 
+            onUpload={onQuestionsUploaded} 
+          />
+        )}
       </div>
     );
   }
@@ -155,7 +184,6 @@ export function QuizApp() {
               let strokeColor = "transparent";
               let bgClass = "bg-secondary/50 hover:bg-secondary/80";
               let textStyles = "text-muted-foreground group-hover:text-foreground";
-              let icon = null;
 
               if (isSubmitted) {
                 if (isCorrect) {
@@ -248,6 +276,11 @@ export function QuizApp() {
 
         </div>
       </div>
+      {isUploadModalOpen && (
+        <QuestionUploadModal 
+          onUpload={onQuestionsUploaded} 
+        />
+      )}
     </div>
   );
 }

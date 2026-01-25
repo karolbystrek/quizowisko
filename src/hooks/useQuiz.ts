@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import type { Question } from "@/types/quiz";
-import initialQuestions from "@/data/questions.json";
 
 interface UseQuizReturn {
   currentQuestion: Question | null;
@@ -16,6 +15,7 @@ interface UseQuizReturn {
   handleNext: () => void;
   handleRestart: () => void;
   handleRetryWrong: () => void;
+  loadQuestions: (newQuestions: Question[]) => void;
   progress: number;
 }
 
@@ -30,6 +30,7 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 export function useQuiz(): UseQuizReturn {
+  const [baseQuestions, setBaseQuestions] = useState<Question[]>([]);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
@@ -39,9 +40,10 @@ export function useQuiz(): UseQuizReturn {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    // Initial shuffle
-    setQuestions(shuffleArray(initialQuestions));
-  }, []);
+    if (baseQuestions.length > 0) {
+      setQuestions(shuffleArray(baseQuestions));
+    }
+  }, [baseQuestions]);
 
   const currentQuestion = questions[currentQuestionIndex] || null;
 
@@ -91,14 +93,14 @@ export function useQuiz(): UseQuizReturn {
   }, [currentQuestionIndex, questions.length]);
 
   const handleRestart = useCallback(() => {
-    setQuestions(shuffleArray(initialQuestions));
+    setQuestions(shuffleArray(baseQuestions));
     setCurrentQuestionIndex(0);
     setSelectedAnswers([]);
     setScore(0);
     setWrongQuestions([]);
     setIsFinished(false);
     setIsSubmitted(false);
-  }, []);
+  }, [baseQuestions]);
 
   const handleRetryWrong = useCallback(() => {
     if (wrongQuestions.length === 0) {
@@ -114,6 +116,17 @@ export function useQuiz(): UseQuizReturn {
     setIsSubmitted(false);
   }, [wrongQuestions, handleRestart]);
 
+  const loadQuestions = useCallback((newQuestions: Question[]) => {
+    setBaseQuestions(newQuestions);
+    setQuestions(shuffleArray(newQuestions));
+    setCurrentQuestionIndex(0);
+    setSelectedAnswers([]);
+    setScore(0);
+    setWrongQuestions([]);
+    setIsFinished(false);
+    setIsSubmitted(false);
+  }, []);
+
   return {
     currentQuestion,
     currentQuestionIndex,
@@ -128,6 +141,7 @@ export function useQuiz(): UseQuizReturn {
     handleNext,
     handleRestart,
     handleRetryWrong,
-    progress: (currentQuestionIndex / questions.length) * 100,
+    loadQuestions,
+    progress: (currentQuestionIndex / (questions.length || 1)) * 100,
   };
 }
