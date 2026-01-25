@@ -39,11 +39,21 @@ export function useQuiz(): UseQuizReturn {
   const [isFinished, setIsFinished] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // Load from localStorage on mount
   useEffect(() => {
-    if (baseQuestions.length > 0) {
-      setQuestions(shuffleArray(baseQuestions));
+    const saved = localStorage.getItem("quiz_questions");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setBaseQuestions(parsed);
+          setQuestions(shuffleArray(parsed));
+        }
+      } catch (e) {
+        console.error("Failed to parse saved questions", e);
+      }
     }
-  }, [baseQuestions]);
+  }, []);
 
   const currentQuestion = questions[currentQuestionIndex] || null;
 
@@ -117,6 +127,7 @@ export function useQuiz(): UseQuizReturn {
   }, [wrongQuestions, handleRestart]);
 
   const loadQuestions = useCallback((newQuestions: Question[]) => {
+    localStorage.setItem("quiz_questions", JSON.stringify(newQuestions));
     setBaseQuestions(newQuestions);
     setQuestions(shuffleArray(newQuestions));
     setCurrentQuestionIndex(0);

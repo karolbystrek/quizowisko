@@ -3,12 +3,12 @@ import { useQuiz } from "@/hooks/useQuiz";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { ArrowRight, RotateCcw } from "lucide-react";
+import { ArrowRight, RotateCcw, Upload } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import DotGrid from "@/components/DotGrid";
-import { useThemeObserver } from "@/hooks/useThemeObserver";
-import { RoughBox } from "@/components/ui/RoughBox";
+import { useTheme } from "@/components/ThemeProvider";
 import { QuestionUploadModal } from "@/components/QuestionUploadModal";
+import { RoughBox } from "@/components/ui/RoughBox";
 import type { Question } from "@/types/quiz";
 
 export function QuizApp() {
@@ -29,8 +29,16 @@ export function QuizApp() {
     loadQuestions,
   } = useQuiz();
 
-  const [isUploadModalOpen, setIsUploadModalOpen] = useState(true);
-  const isDark = useThemeObserver();
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(() => {
+    // Only open by default if we don't have questions saved
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("quiz_questions");
+      return !saved;
+    }
+    return true;
+  });
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const onQuestionsUploaded = (questions: Question[]) => {
     loadQuestions(questions);
@@ -54,15 +62,15 @@ export function QuizApp() {
                 activeColor={dotActiveColor}
             />
         </div>
-        <div className="animate-pulse text-xl font-medium tracking-widest text-muted-foreground z-10">
-          LOADING QUIZ...
+        <div className="animate-pulse text-xl font-medium tracking-widest text-muted-foreground z-10 font-hand">
+          PLEASE UPLOAD QUESTIONS TO START
         </div>
-        {isUploadModalOpen && (
-          <QuestionUploadModal 
-            onUpload={onQuestionsUploaded} 
-          />
-        )}
-      </div>
+                {isUploadModalOpen && (
+                  <QuestionUploadModal 
+                    onUpload={onQuestionsUploaded} 
+                    onClose={totalQuestions > 0 ? () => setIsUploadModalOpen(false) : undefined}
+                  />
+                )}      </div>
     );
   }
 
@@ -82,6 +90,10 @@ export function QuizApp() {
           <Button variant="ghost" size="icon" onClick={handleRestart} className="rounded-full" roughShape="circle">
             <RotateCcw className="h-[1.2rem] w-[1.2rem]" />
             <span className="sr-only">Reset Quiz</span>
+          </Button>
+          <Button variant="ghost" size="icon" onClick={() => setIsUploadModalOpen(true)} className="rounded-full" roughShape="circle">
+            <Upload className="h-[1.2rem] w-[1.2rem]" />
+            <span className="sr-only">Upload Questions</span>
           </Button>
           <ThemeToggle />
         </div>
@@ -127,16 +139,16 @@ export function QuizApp() {
               size="sm"
               className="mt-4 text-muted-foreground hover:text-foreground"
             >
-              Upload New Questions
+              Upload Different Questions
             </Button>
           </div>
         </div>
-        {isUploadModalOpen && (
-          <QuestionUploadModal 
-            onUpload={onQuestionsUploaded} 
-          />
-        )}
-      </div>
+                {isUploadModalOpen && (
+                  <QuestionUploadModal 
+                    onUpload={onQuestionsUploaded} 
+                    onClose={totalQuestions > 0 ? () => setIsUploadModalOpen(false) : undefined}
+                  />
+                )}      </div>
     );
   }
 
@@ -158,6 +170,10 @@ export function QuizApp() {
         <Button variant="ghost" size="icon" onClick={handleRestart} className="rounded-full" roughShape="circle">
           <RotateCcw className="h-[1.2rem] w-[1.2rem]" />
           <span className="sr-only">Reset Quiz</span>
+        </Button>
+        <Button variant="ghost" size="icon" onClick={() => setIsUploadModalOpen(true)} className="rounded-full" roughShape="circle">
+          <Upload className="h-[1.2rem] w-[1.2rem]" />
+          <span className="sr-only">Upload Questions</span>
         </Button>
         <ThemeToggle />
       </div>
@@ -188,7 +204,7 @@ export function QuizApp() {
             {currentQuestion?.answers.map((answer, index) => {
               const isSelected = selectedAnswers.includes(index);
               const isCorrect = answer.isCorrect;
-              
+
               let strokeColor = "transparent";
               let bgClass = "bg-secondary/50 hover:bg-secondary/80";
               let textStyles = "text-muted-foreground group-hover:text-foreground";
@@ -231,13 +247,13 @@ export function QuizApp() {
                     <Checkbox
                         checked={isSelected}
                         onCheckedChange={() => !isSubmitted && handleAnswerToggle(index)}
-                        stroke={isSelected 
-                            ? (isDark ? "#ffffff" : "#000000") 
+                        stroke={isSelected
+                            ? (isDark ? "#ffffff" : "#000000")
                             : (isDark ? "#71717a" : "#a1a1aa")
                         }
                         className={cn(
                         "mr-5 h-5 w-5",
-                        isSubmitted && "pointer-events-none" 
+                        isSubmitted && "pointer-events-none"
                         )}
                     />
                     <span className={cn(
@@ -268,8 +284,8 @@ export function QuizApp() {
                 roughCornerRadius={16}
                                 className={cn(
                                   "w-full md:w-auto min-w-[200px] h-16 text-lg rounded-2xl transition-all duration-300",
-                                  isSubmitted 
-                                    ? "bg-primary text-primary-foreground font-bold active:scale-95" 
+                                  isSubmitted
+                                    ? "bg-primary text-primary-foreground font-bold active:scale-95"
                                     : "bg-primary text-primary-foreground font-semibold tracking-wide active:scale-95"
                                 )}              >
                 {isSubmitted ? (
@@ -284,11 +300,11 @@ export function QuizApp() {
 
         </div>
       </div>
-      {isUploadModalOpen && (
-        <QuestionUploadModal 
-          onUpload={onQuestionsUploaded} 
-        />
-      )}
-    </div>
+              {isUploadModalOpen && (
+                <QuestionUploadModal 
+                  onUpload={onQuestionsUploaded} 
+                  onClose={totalQuestions > 0 ? () => setIsUploadModalOpen(false) : undefined}
+                />
+              )}    </div>
   );
 }

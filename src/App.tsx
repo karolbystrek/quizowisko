@@ -1,9 +1,12 @@
 import { QuizApp } from "@/components/QuizApp";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./index.css";
 
 export function App() {
   return (
-    <QuizApp />
+    <ThemeProvider>
+      <QuizApp />
+    </ThemeProvider>
   );
 }
 

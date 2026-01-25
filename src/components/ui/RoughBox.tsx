@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import rough from 'roughjs';
 import { cn } from '@/lib/utils';
+import { useTheme } from '../ThemeProvider';
 
 export interface RoughProps {
   roughness?: number;
@@ -23,7 +24,7 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
   className,
   roughness = 1.5,
   bowing = 1,
-  stroke = 'currentColor',
+  stroke,
   strokeWidth = 1,
   strokeLineDash,
   strokeLineDashOffset,
@@ -38,6 +39,7 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const { theme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -77,10 +79,13 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
+    // Default stroke based on theme if not provided
+    const effectiveStroke = stroke || (theme === 'dark' ? '#ffffff' : '#000000');
+
     const config: any = {
       roughness,
       bowing,
-      stroke,
+      stroke: effectiveStroke,
       strokeWidth,
       fill,
       fillStyle,
@@ -157,7 +162,7 @@ export const RoughOverlay: React.FC<RoughProps & { className?: string }> = ({
         });
     }
 
-  }, [dimensions, roughness, bowing, stroke, strokeWidth, strokeLineDash, strokeLineDashOffset, fill, fillStyle, fillWeight, hachureGap, shape, cornerRadius, seed, drawCheck]);
+  }, [dimensions, roughness, bowing, stroke, strokeWidth, strokeLineDash, strokeLineDashOffset, fill, fillStyle, fillWeight, hachureGap, shape, cornerRadius, seed, drawCheck, theme]);
 
   return (
     <canvas

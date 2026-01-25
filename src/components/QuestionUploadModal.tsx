@@ -1,16 +1,20 @@
 import React, { useState, useCallback } from 'react';
 import { RoughBox } from './ui/RoughBox';
-import { Upload, AlertCircle } from 'lucide-react';
+import { Upload, AlertCircle, X } from 'lucide-react';
 import type { Question } from '@/types/quiz';
 import { cn } from '@/lib/utils';
+import { Button } from './ui/button';
+import { useTheme } from './ThemeProvider';
 
 interface QuestionUploadModalProps {
   onUpload: (questions: Question[]) => void;
+  onClose?: () => void;
 }
 
-export const QuestionUploadModal: React.FC<QuestionUploadModalProps> = ({ onUpload }) => {
+export const QuestionUploadModal: React.FC<QuestionUploadModalProps> = ({ onUpload, onClose }) => {
     const [isDragging, setIsDragging] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const { theme } = useTheme();
 
     const validateQuestions = (data: any): data is Question[] => {
         if (!Array.isArray(data)) return false;
@@ -85,17 +89,32 @@ export const QuestionUploadModal: React.FC<QuestionUploadModalProps> = ({ onUplo
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
+        <div 
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300"
+            onClick={(e) => {
+                if (e.target === e.currentTarget && onClose) {
+                    onClose();
+                }
+            }}
+        >
             <RoughBox 
                 className="w-full max-w-lg p-8 bg-background shadow-2xl animate-in zoom-in-95 duration-300"
                 roughness={1}
                 strokeWidth={2}
-                cornerRadius={12}
-                shape="rounded"
+                shape="rectangle"
+                onClick={(e) => e.stopPropagation()}
             >
                 <div className="relative z-10">
                     <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-3xl font-bold font-hand text-center w-full">Upload Quiz Questions</h2>
+                        <div className="w-10" /> {/* Spacer */}
+                        <h2 className="text-3xl font-bold font-hand text-center flex-1">Upload Quiz Questions</h2>
+                        <div className="w-10 flex justify-end">
+                            {onClose && (
+                                <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full h-8 w-8" roughShape="circle">
+                                    <X className="w-5 h-5" />
+                                </Button>
+                            )}
+                        </div>
                     </div>
 
                     <p className="mb-6 text-muted-foreground text-center">
@@ -112,19 +131,19 @@ export const QuestionUploadModal: React.FC<QuestionUploadModalProps> = ({ onUplo
                         )}
                         onClick={() => document.getElementById('fileInput')?.click()}
                     >
-                        <RoughBox
-                            className={cn(
-                                "flex flex-col items-center justify-center py-12 px-4 transition-colors",
-                                isDragging ? "bg-accent/50" : "bg-accent/10 hover:bg-accent/20"
-                            )}
-                            roughness={2}
-                            strokeWidth={2}
-                            strokeLineDash={isDragging ? [8, 8] : undefined}
-                            fillStyle="hachure"
-                            fill={isDragging ? "currentColor" : "transparent"}
-                            fillWeight={0.5}
-                            hachureGap={10}
-                        >
+                            <RoughBox
+                                className={cn(
+                                    "flex flex-col items-center justify-center py-12 px-4 transition-colors",
+                                    isDragging ? "bg-accent/50 text-accent-foreground" : "bg-accent/10 hover:bg-accent/20"
+                                )}
+                                roughness={2}
+                                strokeWidth={2}
+                                strokeLineDash={[8, 8]}
+                                fillStyle="hachure"
+                                fill={isDragging ? (theme === 'dark' ? '#3f3f46' : '#e4e4e7') : "transparent"}
+                                fillWeight={0.5}
+                                hachureGap={10}
+                            >
                             <Upload className={cn(
                                 "w-12 h-12 mb-4 transition-transform duration-300",
                                 isDragging ? "scale-110 -translate-y-1" : "group-hover:-translate-y-1"
