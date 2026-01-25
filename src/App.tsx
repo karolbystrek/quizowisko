@@ -1,7 +1,10 @@
+import { QuizApp } from "@/components/QuizApp";
 import "./index.css";
 
 export function App() {
-  return null;
+  return (
+    <QuizApp />
+  );
 }
 
 export default App;

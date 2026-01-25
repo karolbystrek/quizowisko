@@ -1,0 +1,47 @@
+[
+  {
+    "question": "Which of the following are valid JavaScript data types?",
+    "answers": [
+      { "text": "String", "isCorrect": true },
+      { "text": "Boolean", "isCorrect": true },
+      { "text": "Float", "isCorrect": false },
+      { "text": "Undefined", "isCorrect": true }
+    ]
+  },
+  {
+    "question": "What is the capital of France?",
+    "answers": [
+      { "text": "Berlin", "isCorrect": false },
+      { "text": "Madrid", "isCorrect": false },
+      { "text": "Paris", "isCorrect": true },
+      { "text": "Rome", "isCorrect": false }
+    ]
+  },
+  {
+    "question": "Which HTTP methods are typically used for updating a resource?",
+    "answers": [
+      { "text": "GET", "isCorrect": false },
+      { "text": "POST", "isCorrect": false },
+      { "text": "PUT", "isCorrect": true },
+      { "text": "PATCH", "isCorrect": true }
+    ]
+  },
+  {
+    "question": "Which of these are CSS preprocessors?",
+    "answers": [
+      { "text": "Sass", "isCorrect": true },
+      { "text": "Less", "isCorrect": true },
+      { "text": "TypeScript", "isCorrect": false },
+      { "text": "Stylus", "isCorrect": true }
+    ]
+  },
+  {
+    "question": "What does DOM stand for?",
+    "answers": [
+      { "text": "Document Object Model", "isCorrect": true },
+      { "text": "Data Object Model", "isCorrect": false },
+      { "text": "Document Oriented Model", "isCorrect": false },
+      { "text": "Digital Ordinance Model", "isCorrect": false }
+    ]
+  }
+]
