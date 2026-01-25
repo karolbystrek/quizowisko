@@ -3,7 +3,7 @@ import { useQuiz } from "@/hooks/useQuiz";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, RotateCcw } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import DotGrid from "@/components/DotGrid";
 import { useThemeObserver } from "@/hooks/useThemeObserver";
@@ -78,7 +78,11 @@ export function QuizApp() {
                 activeColor={dotActiveColor}
             />
         </div>
-        <div className="fixed top-6 right-6 z-50">
+        <div className="fixed top-6 right-6 z-50 flex gap-2">
+          <Button variant="ghost" size="icon" onClick={handleRestart} className="rounded-full" roughShape="circle">
+            <RotateCcw className="h-[1.2rem] w-[1.2rem]" />
+            <span className="sr-only">Reset Quiz</span>
+          </Button>
           <ThemeToggle />
         </div>
         <div className="max-w-md w-full text-center space-y-8 z-10 relative">
@@ -149,8 +153,12 @@ export function QuizApp() {
           />
       </div>
 
-      {/* Fixed Theme Toggle */}
-      <div className="fixed top-6 right-6 z-50">
+      {/* Top Controls */}
+      <div className="fixed top-6 right-6 z-50 flex gap-2">
+        <Button variant="ghost" size="icon" onClick={handleRestart} className="rounded-full" roughShape="circle">
+          <RotateCcw className="h-[1.2rem] w-[1.2rem]" />
+          <span className="sr-only">Reset Quiz</span>
+        </Button>
         <ThemeToggle />
       </div>
 
