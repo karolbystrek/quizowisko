@@ -1,0 +1,1213 @@
+[
+  {
+    "question": "Czy charakterystyka spektralna czujnika CCD i czułość spektralna ludzkiego oka są:",
+    "answers": [
+      {
+        "text": "takie same",
+        "isCorrect": false
+      },
+      {
+        "text": "oko ludzkie obejmuje szerszy zakres niż CCD",
+        "isCorrect": false
+      },
+      {
+        "text": "czujnik CCD obejmuje szerszy zakres niż oko ludzkie",
+        "isCorrect": true
+      },
+      {
+        "text": "maksymalna czułość CCD, w stosunku do czułości oka jest przesunięta w stronę nadfioletu",
+        "isCorrect": false
+      },
+      {
+        "text": "maksymalna czułość CCD, w stosunku do czułości oka jest przesunięta w stronę podczerwieni",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Plamka żółta w oku to:",
+    "answers": [
+      {
+        "text": "miejsce o największym skupieniu czopków",
+        "isCorrect": true
+      },
+      {
+        "text": "ujście nerwu wzrokowego",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Dla kombinacji liniowej dwóch obrazów monochromatycznych:",
+    "answers": [
+      {
+        "text": "należy bezwzględnie wykonać normalizację obrazu wyjściowego",
+        "isCorrect": false
+      },
+      {
+        "text": "normalizacja obrazu wyjściowego nie jest potrzebne",
+        "isCorrect": true
+      },
+      {
+        "text": "należy wykonać normalizację obrazu wyjściowego, jeżeli jest to niezbędne (zależy od współczynników kombinacji)",
+        "isCorrect": false
+      },
+      {
+        "text": "należy zapobiec sytuacji w którego nastąpi ewentualne dzielenie przez zero za pomocą przekształcenia log(I(x,y)+1), a drugi obraz ma punkt o wartości zero dla ustalonych współrzędnych (x,y)",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Często obraz kolorowy jest kodowany za pomocą 32 bitów. Wówczas 24 bity stosuje się na zakodowanie składowych RGB oraz dodatkowo 8 bitów w celu:",
+    "answers": [
+      {
+        "text": "zapisania nasycenia barwy czerwonej",
+        "isCorrect": false
+      },
+      {
+        "text": "zapisania nasycenia barwy zielonej",
+        "isCorrect": false
+      },
+      {
+        "text": "zapisania nasycenia barwy niebieskiej",
+        "isCorrect": false
+      },
+      {
+        "text": "zwiększenia wydajności operowania na obrazie",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Z wymienionych poniżej wskaż przestrzenie barw w których wyróżnia się osobną składową jasności obrazu:",
+    "answers": [
+      {
+        "text": "RGB",
+        "isCorrect": false
+      },
+      {
+        "text": "YUV",
+        "isCorrect": true
+      },
+      {
+        "text": "CMY",
+        "isCorrect": false
+      },
+      {
+        "text": "HSV",
+        "isCorrect": true
+      },
+      {
+        "text": "CMYK",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Histogram obrazu po operacji wyrównywania histogramu powinien mieć rozkład:",
+    "answers": [
+      {
+        "text": "normalny",
+        "isCorrect": false
+      },
+      {
+        "text": "Chi-kwadrat",
+        "isCorrect": false
+      },
+      {
+        "text": "dla takiego obrazu nie da się wyznaczyć histogramu",
+        "isCorrect": false
+      },
+      {
+        "text": "jednorodny",
+        "isCorrect": true
+      },
+      {
+        "text": "binarny (tylko dwie wartości)",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Operacja wyrównywania histogramu w RGB (osobno dla każdej ze składowych) nie powoduje znaczącej zmiany kolorów w obrazie:",
+    "answers": [
+      {
+        "text": "prawda",
+        "isCorrect": false
+      },
+      {
+        "text": "fałsz",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Zaznacz prawidłowe zdanie(a) dotyczące interpolacji obrazów barwnych:",
+    "answers": [
+      {
+        "text": "niezbędne jest wykonanie interpolacji najbliższego sąsiada dla każdego kanału oddzielnie",
+        "isCorrect": true
+      },
+      {
+        "text": "interpolację najbliższego sąsiada wystarczy wykonać tylko dla jednego kanału",
+        "isCorrect": false
+      },
+      {
+        "text": "niezbędne jest wykonanie interpolacji liniowej dla każdego kanału oddzielnie",
+        "isCorrect": true
+      },
+      {
+        "text": "interpolację liniową wystarczy wykonać tylko dla jednego kanału",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Czy filtracja dolnoprzepustowa pozwala usunąć zakłócenia typu impulsowego?",
+    "answers": [
+      {
+        "text": "tak",
+        "isCorrect": false
+      },
+      {
+        "text": "nie",
+        "isCorrect": true
+      },
+      {
+        "text": "tak, ale tylko o dużej amplitudzie",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Dany jest obraz lekko nieostry. Jakie podejście powinno umożliwić poprawienie jego jakości?",
+    "answers": [
+      {
+        "text": "dodanie/odjęcie od obrazu rezultatu filtracji dolnoprzepustowej",
+        "isCorrect": false
+      },
+      {
+        "text": "dodanie/odjęcie od obrazu rezultatu filtracji medianowej",
+        "isCorrect": false
+      },
+      {
+        "text": "dodanie/odjęcie od obrazu rezultatu filtracji górnoprzepustowej",
+        "isCorrect": true
+      },
+      {
+        "text": "dodanie/odjęcie od obrazu rezultatu filtracji maksymalnej",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Który z filtrów górnoprzepustowych zachowuje informację o kierunku zmiany pochodnej (gradientu) na obrazie",
+    "answers": [
+      {
+        "text": "filtr Prewitta",
+        "isCorrect": true
+      },
+      {
+        "text": "filtr Sobela",
+        "isCorrect": true
+      },
+      {
+        "text": "filtr adaptacyjny",
+        "isCorrect": false
+      },
+      {
+        "text": "filtr Laplace'a (laplasjan)",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Która(-e) z masek opisują filtry kierunkowe:",
+    "answers": [
+      {
+        "text": "Maska a (0 -1 0; 1 4 1; 0 -1 0 lub podobna laplasjanowa)",
+        "isCorrect": false
+      },
+      {
+        "text": "Maska b (1 1 1; 1 -2 1; -1 -1 -1)",
+        "isCorrect": true
+      },
+      {
+        "text": "Maska c (1 1 1; -1 -2 1; -1 -1 1)",
+        "isCorrect": true
+      },
+      {
+        "text": "Maska d",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "W filtrze bilateralnym podobieństwo punktu centralnego I(x) z innym punktem obrazu I(p) w ustalonym oknie można obliczyć przyjmując formulę:",
+    "answers": [
+      {
+        "text": "exp(|I(x)-I(p)|^2 / 2sigma^2)",
+        "isCorrect": false
+      },
+      {
+        "text": "exp(-|I(x)-I(p)|^2 / 2sigma^2)",
+        "isCorrect": true
+      },
+      {
+        "text": "|I(x)-I(p)|^2 / 2sigma^2",
+        "isCorrect": false
+      },
+      {
+        "text": "-exp(|I(x)+I(p)|^2 / 2sigma^2)",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Wskaż poprawne zdania o algorytmach binaryzacji poznanych na zajęciach:",
+    "answers": [
+      {
+        "text": "metoda Otsu wymaga podania dwóch progów T1 i T2",
+        "isCorrect": false
+      },
+      {
+        "text": "w metodzie Sauvola próg binaryzacji wyznaczany jest na podstawie otoczenia analizowanego piksela",
+        "isCorrect": true
+      },
+      {
+        "text": "w doborze progu binaryzacji największe znaczenie ma analiza histogramu",
+        "isCorrect": true
+      },
+      {
+        "text": "do segmentacji obrazów o niejednorodnym oświetleniu najlepiej nadaje sie którać z globalnych metod",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "W pokazanym na wykładzie filtrze adaptacyjnym uśrednianiu w drugim kroku nie podlegają:",
+    "answers": [
+      {
+        "text": "punkty obiektów",
+        "isCorrect": false
+      },
+      {
+        "text": "minima lokalne",
+        "isCorrect": false
+      },
+      {
+        "text": "maksima lokalne",
+        "isCorrect": false
+      },
+      {
+        "text": "punkty krawędzi",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "W przypadku niejednorodnego oświetlenia obrazu dobrze sprawdzają się metody binaryzacji:",
+    "answers": [
+      {
+        "text": "lokalnej",
+        "isCorrect": true
+      },
+      {
+        "text": "globalnej",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "W którym z wymienionych zakresów widmowych czułość sensorów obrazu typu CCD jest największa?",
+    "answers": [
+      {
+        "text": "ultrafiolet",
+        "isCorrect": false
+      },
+      {
+        "text": "widzialnym",
+        "isCorrect": false
+      },
+      {
+        "text": "bliskiej podczerwieni (800-1100 nm)",
+        "isCorrect": true
+      },
+      {
+        "text": "fal radiowych UKF",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Opis: \"niska czułość, widzenie przy dobrym oświetleniu widzenie barwne\" odpowiada:",
+    "answers": [
+      {
+        "text": "pręcikom",
+        "isCorrect": false
+      },
+      {
+        "text": "czopkom",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Kiedy jednopunktowy przekształcenie obrazu jest odwracalne:",
+    "answers": [
+      {
+        "text": "zawsze",
+        "isCorrect": false
+      },
+      {
+        "text": "tylko jeśli funkcja przekształcająca jest rosnąca",
+        "isCorrect": false
+      },
+      {
+        "text": "jeśli funkcja przekształcająca jest ściśle monotoniczna",
+        "isCorrect": true
+      },
+      {
+        "text": "tylko jeśli funkcja przekształcająca jest malejąca",
+        "isCorrect": false
+      },
+      {
+        "text": "nigdy",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Ile rożnych poziomów jasności może zawierać obraz, którego poziom jasności reprezentowany jest danymi 16-bitowymi?",
+    "answers": [
+      {
+        "text": "16",
+        "isCorrect": false
+      },
+      {
+        "text": "256",
+        "isCorrect": false
+      },
+      {
+        "text": "1024",
+        "isCorrect": false
+      },
+      {
+        "text": "8096",
+        "isCorrect": false
+      },
+      {
+        "text": "65536",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Zaznacz prawidłowe odpowiedzi dotyczące modelu CMY/CMYK",
+    "answers": [
+      {
+        "text": "CMY to model subtraktywny",
+        "isCorrect": true
+      },
+      {
+        "text": "Wartość składowej K otrzymujemy przez zależność K=max(C,M,Y)",
+        "isCorrect": false
+      },
+      {
+        "text": "Wartość składowej K otrzymujemy przez zależność K=min(C,M,Y)",
+        "isCorrect": true
+      },
+      {
+        "text": "CMY to model addytywny",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Histogram skumulowany obrazu po operacji wyrównywania histogramu ma w przybliżeniu postać:",
+    "answers": [
+      {
+        "text": "funkcji liniowej",
+        "isCorrect": true
+      },
+      {
+        "text": "funkcji pierwiastkowej",
+        "isCorrect": false
+      },
+      {
+        "text": "funkcja histogramu skumulowanego zależy od obrazu wejściowego",
+        "isCorrect": false
+      },
+      {
+        "text": "funkcji kwadratowej",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Wyrównywanie histogramu w przestrzeni barw HSV, z wykorzystaniem tylko składowej V, pozwala zachować kolory na obrazie:",
+    "answers": [
+      {
+        "text": "prawda",
+        "isCorrect": true
+      },
+      {
+        "text": "fałsz",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "W jakich sytuacjach metoda najbliższego sąsiada daje lepsze efekty niż interpolacja dwuliniowa:",
+    "answers": [
+      {
+        "text": "nigdy",
+        "isCorrect": false
+      },
+      {
+        "text": "zawsze",
+        "isCorrect": false
+      },
+      {
+        "text": "w przypadku niektórych naturalnych obrazów, z bogatą paletą odcieni szarości",
+        "isCorrect": false
+      },
+      {
+        "text": "w przypadku niektórych sztucznych obrazów, z bardzo ograniczoną paletą odcieni szarości",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Czy suma współczynników filtra (elementów maski) po normalizacji może przekraczać wartość 1?",
+    "answers": [
+      {
+        "text": "tak",
+        "isCorrect": false
+      },
+      {
+        "text": "nie",
+        "isCorrect": true
+      },
+      {
+        "text": "tak, ale jeśli jest to filtr uśredniająco-medianowy",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Które z poniższych zakłóceń może być lepiej usunięte przez medianę niż przez filtr uśredniający:",
+    "answers": [
+      {
+        "text": "usunięcie szumu o rozkładzie normalnym (Gaussa)",
+        "isCorrect": false
+      },
+      {
+        "text": "niewykorzystanie wszystkich poziomów jasności",
+        "isCorrect": false
+      },
+      {
+        "text": "nierównomierne oświetlenie sceny",
+        "isCorrect": false
+      },
+      {
+        "text": "usunięcie szymu typu salt and paper (zakłócenia impulsowe)",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Które z zakłóceń (ciemny prostokąt na jasnym tle) zostanie całkowicie wyeliminowane przez medianę o masce kwadratowej 5x5:",
+    "answers": [
+      {
+        "text": "o rozmiarze 2x4",
+        "isCorrect": true
+      },
+      {
+        "text": "o rozmiarze 5x6",
+        "isCorrect": false
+      },
+      {
+        "text": "o rozmiarze 3x5",
+        "isCorrect": false
+      },
+      {
+        "text": "o rozmiarze 11x2",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Która z poniższych masek nie jest maską laplasjanową?",
+    "answers": [
+      {
+        "text": "a) (postać 0 -1 0; -1 4 -1; 0 -1 0)",
+        "isCorrect": false
+      },
+      {
+        "text": "b) (postać wyglądająca na gradientową/inną)",
+        "isCorrect": true
+      },
+      {
+        "text": "c) (postać 0 -1 0; -1 5 -1 ...)",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Czy można ustawić filtr bilateralny w ten sposób, aby filtrował szum niejednorodny (zmienne natężenie szumu w obrazie)?",
+    "answers": [
+      {
+        "text": "tak",
+        "isCorrect": true
+      },
+      {
+        "text": "nie",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "W filtrze bilateralnym podobieństwo punktu centralnego I(x) z innym punktem obrazu I(p) w ustalonym oknie można obliczyć przyjmując formulę:",
+    "answers": [
+      {
+        "text": "exp(-|I(x)-I(p)|^2 / 2sigma^2)",
+        "isCorrect": true
+      },
+      {
+        "text": "-exp(-|I(x)+I(p)|^2 / 2sigma^2)",
+        "isCorrect": false
+      },
+      {
+        "text": "exp(|I(x)-I(p)|^2 / 2sigma^2)",
+        "isCorrect": false
+      },
+      {
+        "text": "|I(x)-I(p)|^2 / 2sigma^2",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Metoda lokalnej binaryzacji Sauvoli wykorzystuje jako parametry",
+    "answers": [
+      {
+        "text": "odchylenie standardowe w oknie",
+        "isCorrect": true
+      },
+      {
+        "text": "średnią jasność w oknie",
+        "isCorrect": true
+      },
+      {
+        "text": "wartość maksymalną w oknie",
+        "isCorrect": false
+      },
+      {
+        "text": "wartość minimalną w oknie",
+        "isCorrect": false
+      },
+      {
+        "text": "splot okna z filtrem Gabora",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Który z niekorzystnych efektów jest niwelowany dzięki zastosowaniu dwuetapowego przetwarzania w filtrze adaptacyjnym przedstawionym na wykładzie:",
+    "answers": [
+      {
+        "text": "sklejanie zakłóceń w większe grupy niemożliwe do usunięcia",
+        "isCorrect": false
+      },
+      {
+        "text": "zmiana gabarytów małych obiektów",
+        "isCorrect": false
+      },
+      {
+        "text": "rozjaśnienie obrazu",
+        "isCorrect": false
+      },
+      {
+        "text": "rozmywanie punktów krawędziowych",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Które z poniższych operacji morfologicznych mogą zmniejszać pole figury poddanej przekształceniu:",
+    "answers": [
+      {
+        "text": "zamknięcie",
+        "isCorrect": false
+      },
+      {
+        "text": "erozja",
+        "isCorrect": true
+      },
+      {
+        "text": "ścieranie",
+        "isCorrect": true
+      },
+      {
+        "text": "dylatacja",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Operacja top-hat to:",
+    "answers": [
+      {
+        "text": "wykonanie otwarcia i odjęcia wyniku od obrazu oryginalnego",
+        "isCorrect": true
+      },
+      {
+        "text": "wykonanie erozji i odjęcia wyniku od obrazu oryginalnego",
+        "isCorrect": false
+      },
+      {
+        "text": "wykonanie zamknięcia i odjęcia wyniku od obrazu oryginalnego",
+        "isCorrect": false
+      },
+      {
+        "text": "wykonanie dylatacji i odjęcia wyniku od obrazu oryginalnego",
+        "isCorrect": false
+      },
+      {
+        "text": "kolejno wykonane otwarcie i zamknięcie",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Operacja detekcji odizolowanych punktów należy do grupy",
+    "answers": [
+      {
+        "text": "ścieniania",
+        "isCorrect": false
+      },
+      {
+        "text": "pogrubiania",
+        "isCorrect": false
+      },
+      {
+        "text": "\"trafi nie trafi\"",
+        "isCorrect": true
+      },
+      {
+        "text": "żadne z powyższych",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Zaznacz poprawne stwierdzenie (stwierdzenia) dotyczące transformaty Hougha.",
+    "answers": [
+      {
+        "text": "prostej w przestrzeni kartezjańskiej odpowiada krzywa sinusoidalna w przestrzeni Hougha (p, θ)",
+        "isCorrect": false
+      },
+      {
+        "text": "prostej w przestrzeni kartezjańskiej odpowiada punkt w przestrzeni Hougha (p, θ)",
+        "isCorrect": true
+      },
+      {
+        "text": "punktowi w przestrzeni kartezjańskiej odpowiada krzywa sinusoidalna w przestrzeni Hougha (p, θ)",
+        "isCorrect": true
+      },
+      {
+        "text": "punktowi w przestrzeni kartezjańskiej odpowiada prosta w przestrzeni Hougha (p, θ)",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Czy za pomocą odpowiedniej modyfikacji transformaty Hougha można wykryć okręgi na obrazie?",
+    "answers": [
+      {
+        "text": "tak",
+        "isCorrect": true
+      },
+      {
+        "text": "nie",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Segmentację możemy uznać za proces podziału R na n podobszarów R1,R2,...,Rn takich, że (zaznacz poprawne odpowiedzi)",
+    "answers": [
+      {
+        "text": "Suma Ri jest podzbiorem R (zawiera się w R)",
+        "isCorrect": false
+      },
+      {
+        "text": "Ri składa się z połączonych ze sobą pikseli",
+        "isCorrect": true
+      },
+      {
+        "text": "Ri iloczyn Rj = zbiór pusty dla wszystkich i != j",
+        "isCorrect": true
+      },
+      {
+        "text": "Q(Ri) = TRUE dla i=1,2,...,n",
+        "isCorrect": true
+      },
+      {
+        "text": "Q(Ri u Rj) = FALSE dla każdych sąsiednich Ri i Rj",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Dla segmentacji przez rozrost (zaznacz zdania prawdziwe)",
+    "answers": [
+      {
+        "text": "konieczne jest określenie kryterium podobieństwa pikseli",
+        "isCorrect": true
+      },
+      {
+        "text": "w trakcie działania piksele odwiedzane są wielokrotnie",
+        "isCorrect": false
+      },
+      {
+        "text": "rekurencja jest przerywana w przypadku, gdy różnica jasności... przekroczy próg",
+        "isCorrect": false
+      },
+      {
+        "text": "metoda może działać poprawnie zarówno jeśli wykorzysta się stos, jak i kolejkę",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Dla segmentacji przez podział i łączenie:",
+    "answers": [
+      {
+        "text": "w pierwszym kroku obraz dzielony jest na fragmenty o rozmiarze 8x8",
+        "isCorrect": false
+      },
+      {
+        "text": "w pierwszym kroku obraz dzielony jest na 4 części, jeśli nie jest spełniony predykat Q",
+        "isCorrect": true
+      },
+      {
+        "text": "w rezultacie algorytmu mogą powstawać niepołączone obszary o jednakowych właściwościach",
+        "isCorrect": true
+      },
+      {
+        "text": "procedura łączenia służy do eliminacji błędów polegających na występowaniu obok siebie różnych podobszarów o zbliżonych właściwościach",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Operacja otwarcia (zaznacz zdania prawdziwe):",
+    "answers": [
+      {
+        "text": "nie zmienia w istotny sposób pola powierzchni dużych figur (dla obrazów binarnych)",
+        "isCorrect": true
+      },
+      {
+        "text": "usuwa z obrazu niewielkie obiekty typu wypustki",
+        "isCorrect": true
+      },
+      {
+        "text": "to kolejne wykonanie na obrazie najpierw dylatacji, a następnie erozji",
+        "isCorrect": false
+      },
+      {
+        "text": "bada zgodność otoczenia analizowanych punktów z elementem strukturalnym (maską)",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Parametrami algorytmu Canny są:",
+    "answers": [
+      {
+        "text": "tylko sigma odchylenie standardowe rozkładu normalnego",
+        "isCorrect": false
+      },
+      {
+        "text": "tylko dwa progi binaryzacji T1 i T2",
+        "isCorrect": false
+      },
+      {
+        "text": "sigma - odchylenie standardowe rozkładu normalnego oraz próg binaryzacji T",
+        "isCorrect": false
+      },
+      {
+        "text": "sigma odchylenie standardowe rozkładu normalnego oraz dwa progi binaryzacji T1 i T2",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Jaką wartość przyjmuje etykieta L w trakcie segmentacji realizowanej w sposób omówiony na wykładzie i przedstawiony na zajęciach (sytuacja: L1=0, L2=L2, X=?)",
+    "answers": [
+      {
+        "text": "L1",
+        "isCorrect": true
+      },
+      {
+        "text": "L2",
+        "isCorrect": false
+      },
+      {
+        "text": "L3",
+        "isCorrect": false
+      },
+      {
+        "text": "inną",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Zaznacz poprawne stwierdzenie (stwierdzenia) dotyczące algorytmu indeksacji poznanego na zajęciach na etapie zapisywania konfliktów",
+    "answers": [
+      {
+        "text": "zapis może nastąpić tylko w punktach, w których nadano nową etykietę",
+        "isCorrect": false
+      },
+      {
+        "text": "zapis może nastąpić tylko w punktach, w których nadano jedną z sąsiadujących etykiet",
+        "isCorrect": true
+      },
+      {
+        "text": "zapis nigdy nie nastąpi w punktach, w których nadano nową etykietę",
+        "isCorrect": true
+      },
+      {
+        "text": "zapis nigdy nie nastąpi w punktach, w których nadano jedną z sąsiadujących etykiet",
+        "isCorrect": false
+      },
+      {
+        "text": "zapis może nastąpić punktach, w których nadano zarówno nową etykietę, jak i jedną z sąsiadujących",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Dylatację dla obrazów w odcieniach szarości możemy opisać jako filtr(y):",
+    "answers": [
+      {
+        "text": "dolnoprzepustowy",
+        "isCorrect": false
+      },
+      {
+        "text": "górnoprzepustowy",
+        "isCorrect": false
+      },
+      {
+        "text": "minimalny",
+        "isCorrect": false
+      },
+      {
+        "text": "maksymalny",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Pierwsza faza indeksacji może kończyć się określeniem nieprawidłowej liczby etykiet. Które z poniższych zdań będzie w takiej sytuacji prawdziwe:",
+    "answers": [
+      {
+        "text": "liczba etykiet jest za mała w trakcie indeksacji obiekty zostały scalone ze sobą",
+        "isCorrect": false
+      },
+      {
+        "text": "liczba etykiet jest za mała część obiektów nie została wykryta",
+        "isCorrect": false
+      },
+      {
+        "text": "liczba etykiet jest za duża obiekty zostały podzielone na mniejsze fragmenty",
+        "isCorrect": true
+      },
+      {
+        "text": "liczba etykiet jest za duża - piksele tła zostały błędnie sklasyfikowane jako nowe obiekty",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Współczynnik kształtu powinien spełniać następujące zależności:",
+    "answers": [
+      {
+        "text": "niezmienniczość ze względu na kształt figury",
+        "isCorrect": false
+      },
+      {
+        "text": "zmienniczość ze względu na przesunięcie",
+        "isCorrect": false
+      },
+      {
+        "text": "zmienniczość ze względu na obrót",
+        "isCorrect": false
+      },
+      {
+        "text": "niezmienniczość ze względu na obrót",
+        "isCorrect": true
+      },
+      {
+        "text": "niezmienniczość ze względu na skalowanie",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Które z poniższych operacji morfologicznych mogą zwiększać pole figury poddanej przekształceniu:",
+    "answers": [
+      {
+        "text": "otwarcie",
+        "isCorrect": false
+      },
+      {
+        "text": "erozja",
+        "isCorrect": false
+      },
+      {
+        "text": "ścieranie",
+        "isCorrect": false
+      },
+      {
+        "text": "dylatacja",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Operacja bottom-hat to wykonanie następujących po sobie operacji:",
+    "answers": [
+      {
+        "text": "wykonanie erozji i odjęcia wyniku od obrazu oryginalnego",
+        "isCorrect": false
+      },
+      {
+        "text": "wykonanie dylatacji i odjęcia wyniku od obrazu oryginalnego",
+        "isCorrect": false
+      },
+      {
+        "text": "wykonanie otwarcia i odjęcia wyniku od obrazu oryginalnego",
+        "isCorrect": false
+      },
+      {
+        "text": "wykonanie zamknięcia i odjęcia wyniku od obrazu oryginalnego",
+        "isCorrect": true
+      },
+      {
+        "text": "kolejno wykonane zamknięcie i otwarcie",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Operacja wyznaczania centroidów należy do grupy:",
+    "answers": [
+      {
+        "text": "ścierania",
+        "isCorrect": true
+      },
+      {
+        "text": "pogrubienia",
+        "isCorrect": false
+      },
+      {
+        "text": "\"trafi nie trafi\"",
+        "isCorrect": false
+      },
+      {
+        "text": "żadna z powyższych",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Zaznacz poprawne stwierdzenie (stwierdzenia) dotyczące transformaty Hougha w przestrzeni (A,B).",
+    "answers": [
+      {
+        "text": "prostej w przestrzeni kartezjańskiej odpowiada punkt w przestrzeni Hougha (A,B)",
+        "isCorrect": true
+      },
+      {
+        "text": "prostej w przestrzeni kartezjańskiej odpowiada pęk prostych w przestrzeni Hougha (A,B)",
+        "isCorrect": false
+      },
+      {
+        "text": "punktowi w przestrzeni kartezjańskiej odpowiada prosta w przestrzeni Hougha (A,B)",
+        "isCorrect": true
+      },
+      {
+        "text": "punktowi w przestrzeni kartezjańskiej odpowiada punkt w przestrzeni Hougha (A,B)",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Czy za pomocą odpowiedniej modyfikacji transformaty Hougha można wykryć elipsy na obrazie?",
+    "answers": [
+      {
+        "text": "tak",
+        "isCorrect": true
+      },
+      {
+        "text": "nie",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Rezultaty segmentacji przez rozrost może poprawić (zaznacz zdania prawdziwe):",
+    "answers": [
+      {
+        "text": "użycie globalnego progu podobieństwa dwóch obszarów",
+        "isCorrect": false
+      },
+      {
+        "text": "użycie adaptacyjnego progu podobieństwa dwóch obszarów",
+        "isCorrect": true
+      },
+      {
+        "text": "użycie filtracji dolnoprzepustowej",
+        "isCorrect": true
+      },
+      {
+        "text": "użycie filtracji górnoprzepustowej",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Współczynnik kształtu powinien spełniać następujące zależności:",
+    "answers": [
+      {
+        "text": "niezmienniczość ze względu na kształt figury",
+        "isCorrect": false
+      },
+      {
+        "text": "zmienniczość ze względu na kształt figury",
+        "isCorrect": true
+      },
+      {
+        "text": "zmienniczość ze względu na obrót",
+        "isCorrect": false
+      },
+      {
+        "text": "niezmienniczość ze względu na obrót",
+        "isCorrect": true
+      },
+      {
+        "text": "niezmienniczość ze względu na skalowanie",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Dla algorytmu detekcji krawędzi Laplacian of Gaussian (LoG) (zaznacz zdania prawdziwe):",
+    "answers": [
+      {
+        "text": "detekcja krawędzi polega na znajdywaniu maksimów lokalnych",
+        "isCorrect": false
+      },
+      {
+        "text": "detekcja krawędzi polega na znajdywaniu miejsc przejścia przez zero",
+        "isCorrect": true
+      },
+      {
+        "text": "z przefiltrowanego filtrem Gaussa obrazu obliczana jest pierwsza pochodna",
+        "isCorrect": false
+      },
+      {
+        "text": "z przefiltrowanego filtrem Gaussa obrazu obliczana jest druga pochodna",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "W poznanym na zajęciach algrytmie indeksacji:",
+    "answers": [
+      {
+        "text": "po pierwszym przebiegu wszystkie obiekty muszą mieć poprawne etykiety",
+        "isCorrect": false
+      },
+      {
+        "text": "po pierwszym przebiegu piksele należące do jednego obiektu mogą mieć różne etykiety",
+        "isCorrect": true
+      },
+      {
+        "text": "potencjalne konflikty (wielokrotne etykiety) zapisywane są w strukturze zbiorów rozłącznych (union find)",
+        "isCorrect": true
+      },
+      {
+        "text": "analizowane jest otoczenie o rozmiarze 5x5",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Która z sytuacji przedstawiona na rysunkach doprowadzi do konieczności zapamiętania informacji o konflikcie",
+    "answers": [
+      {
+        "text": "Sytuacja a",
+        "isCorrect": false
+      },
+      {
+        "text": "Sytuacja b (2, 2, X -> z sąsiadami 2 i 3 lub podobna konfiguracja łącząca różne etykiety)",
+        "isCorrect": true
+      },
+      {
+        "text": "Sytuacja c",
+        "isCorrect": false
+      },
+      {
+        "text": "Sytuacja d (0, 0, X -> z sąsiadami o różnych etykietach niezerowych)",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "question": "Erozję morfologiczną można zdefiniować jako:",
+    "answers": [
+      {
+        "text": "filtr minimalny",
+        "isCorrect": true
+      },
+      {
+        "text": "filtr maksymalny",
+        "isCorrect": false
+      },
+      {
+        "text": "filtr uśredniający",
+        "isCorrect": false
+      },
+      {
+        "text": "filtr adaptacyjny",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "question": "Operacja zamknięcia (zaznacz zdania prawdziwe):",
+    "answers": [
+      {
+        "text": "to kolejne wykonanie na obrazie najpierw erozji, a następnie dylatacji",
+        "isCorrect": false
+      },
+      {
+        "text": "nie zmienia w istotny sposob pola powierzchni dużych figur (dla obrazów binarnych)",
+        "isCorrect": true
+      },
+      {
+        "text": "wypełnia wąskie wcięcia i zatoki",
+        "isCorrect": true
+      },
+      {
+        "text": "bada zgodność otoczenia analizowanych punktów z elementem strukturalnym (maską)",
+        "isCorrect": true
+      }
+    ]
+  }
+]

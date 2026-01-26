@@ -147,3 +147,21 @@ console.table(outputTable);
 const buildTime = (end - start).toFixed(2);
 
 console.log(`\n✅ Build completed in ${buildTime}ms\n`);
+
+// Copy assets to dist
+const assetsSrc = path.resolve("src/assets");
+const assetsDst = path.resolve(outdir, "src/assets");
+
+if (existsSync(assetsSrc)) {
+  console.log(`📂 Copying assets from ${assetsSrc} to ${assetsDst}...`);
+  // Bun doesn't have a built-in recursive copy, we can use a shell command
+  const { spawnSync } = require("child_process");
+  spawnSync("mkdir", ["-p", path.dirname(assetsDst)]);
+  const cpResult = spawnSync("cp", ["-R", assetsSrc, assetsDst]);
+  
+  if (cpResult.status === 0) {
+    console.log("✨ Assets copied successfully!");
+  } else {
+    console.error("❌ Failed to copy assets:", cpResult.stderr.toString());
+  }
+}
