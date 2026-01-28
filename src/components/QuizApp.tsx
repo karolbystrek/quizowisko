@@ -3,7 +3,7 @@ import { useQuiz } from "@/hooks/useQuiz";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { ArrowRight, RotateCcw, Upload, Check, X, Shuffle } from "lucide-react";
+import { ArrowRight, RotateCcw, Upload, Check, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import DotGrid from "@/components/DotGrid";
 import { useTheme } from "@/components/ThemeProvider";
@@ -21,17 +21,22 @@ export function QuizApp() {
     score,
     wrongQuestions,
     isSubmitted,
-    isShuffled,
     handleAnswerToggle,
     handleSubmit,
     handleNext,
     handleRestart,
     handleRetryWrong,
-    toggleShuffling,
     loadQuestions,
   } = useQuiz();
 
-  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(() => {
+    // Only open by default if we don't have questions saved
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("quiz_questions");
+      return !saved;
+    }
+    return true;
+  });
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
@@ -41,6 +46,7 @@ export function QuizApp() {
   };
 
   // Determine colors based on theme
+  // Made light mode dots darker (#a1a1aa - Zinc 400) for better visibility
   const dotBaseColor = isDark ? "#27272a" : "#cbd5e1";
   const dotActiveColor = isDark ? "#52525b" : "#a1a1aa";
 
@@ -48,24 +54,23 @@ export function QuizApp() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background text-foreground relative overflow-hidden">
         <div className="fixed inset-0 z-0 pointer-events-none">
-          <DotGrid
-            className="w-full h-full"
-            dotSize={2}
-            gap={50}
-            baseColor={dotBaseColor}
-            activeColor={dotActiveColor}
-          />
+            <DotGrid
+                className="w-full h-full"
+                dotSize={2}
+                gap={50}
+                baseColor={dotBaseColor}
+                activeColor={dotActiveColor}
+            />
         </div>
         <div className="animate-pulse text-xl font-medium tracking-widest text-muted-foreground z-10 font-hand">
           PLEASE UPLOAD QUESTIONS TO START
         </div>
-        {isUploadModalOpen && (
-          <QuestionUploadModal
-            onUpload={onQuestionsUploaded}
-            onClose={totalQuestions > 0 ? () => setIsUploadModalOpen(false) : undefined}
-          />
-        )}
-      </div>
+                {isUploadModalOpen && (
+                  <QuestionUploadModal 
+                    onUpload={onQuestionsUploaded} 
+                    onClose={totalQuestions > 0 ? () => setIsUploadModalOpen(false) : undefined}
+                  />
+                )}      </div>
     );
   }
 
@@ -73,50 +78,37 @@ export function QuizApp() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center p-4 animate-in fade-in duration-700 bg-background text-foreground relative overflow-hidden">
         <div className="fixed inset-0 z-0 pointer-events-none">
-          <DotGrid
-            className="w-full h-full"
-            dotSize={2}
-            gap={50}
-            baseColor={dotBaseColor}
-            activeColor={dotActiveColor}
-          />
+            <DotGrid
+                className="w-full h-full"
+                dotSize={2}
+                gap={50}
+                baseColor={dotBaseColor}
+                activeColor={dotActiveColor}
+            />
         </div>
-        <div className="fixed top-6 right-6 z-50 flex items-center gap-2">
-          <Button
-            variant={isShuffled ? "default" : "ghost"}
-            size="icon"
-            onClick={toggleShuffling}
-            className="rounded-full"
-            roughShape="circle"
-            stroke={isShuffled ? (isDark ? "#000000" : "#ffffff") : (isDark ? "#ffffff" : "#000000")}
-          >
-            <Shuffle className="h-[1.2rem] w-[1.2rem]" />
-            <span className="sr-only">Toggle Shuffling</span>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleRestart}
-            className="rounded-full"
+        <div className="fixed top-6 right-6 z-50 flex gap-2">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={handleRestart} 
+            className="rounded-full" 
             roughShape="circle"
             stroke={isDark ? "#ffffff" : "#000000"}
           >
             <RotateCcw className="h-[1.2rem] w-[1.2rem]" />
             <span className="sr-only">Reset Quiz</span>
           </Button>
-          {/* 
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsUploadModalOpen(true)}
-            className="rounded-full"
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => setIsUploadModalOpen(true)} 
+            className="rounded-full" 
             roughShape="circle"
             stroke={isDark ? "#ffffff" : "#000000"}
           >
             <Upload className="h-[1.2rem] w-[1.2rem]" />
             <span className="sr-only">Upload Questions</span>
           </Button>
-          */}
           <ThemeToggle />
         </div>
         <div className="max-w-md w-full text-center space-y-8 z-10 relative">
@@ -155,7 +147,6 @@ export function QuizApp() {
               </Button>
             )}
 
-            {/* 
             <Button
               onClick={() => setIsUploadModalOpen(true)}
               variant="ghost"
@@ -164,16 +155,14 @@ export function QuizApp() {
             >
               Upload Different Questions
             </Button>
-            */}
           </div>
         </div>
-        {isUploadModalOpen && (
-          <QuestionUploadModal
-            onUpload={onQuestionsUploaded}
-            onClose={totalQuestions > 0 ? () => setIsUploadModalOpen(false) : undefined}
-          />
-        )}
-      </div>
+                {isUploadModalOpen && (
+                  <QuestionUploadModal 
+                    onUpload={onQuestionsUploaded} 
+                    onClose={totalQuestions > 0 ? () => setIsUploadModalOpen(false) : undefined}
+                  />
+                )}      </div>
     );
   }
 
@@ -181,60 +170,48 @@ export function QuizApp() {
   return (
     <div className="min-h-screen flex flex-col relative bg-background text-foreground transition-colors duration-300 overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <DotGrid
-          className="w-full h-full"
-          dotSize={2}
-          gap={50}
-          baseColor={dotBaseColor}
-          activeColor={dotActiveColor}
-        />
+          <DotGrid
+              className="w-full h-full"
+              dotSize={2}
+              gap={50}
+              baseColor={dotBaseColor}
+              activeColor={dotActiveColor}
+          />
       </div>
 
       {/* Top Controls */}
-      <div className="fixed top-6 right-6 z-50 flex items-center gap-2">
-        <Button
-          variant={isShuffled ? "default" : "ghost"}
-          size="icon"
-          onClick={toggleShuffling}
-          className="rounded-full"
-          roughShape="circle"
-          stroke={isShuffled ? (isDark ? "#000000" : "#ffffff") : (isDark ? "#ffffff" : "#000000")}
-        >
-          <Shuffle className="h-[1.2rem] w-[1.2rem]" />
-          <span className="sr-only">Toggle Shuffling</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleRestart}
-          className="rounded-full"
+      <div className="fixed top-6 right-6 z-50 flex gap-2">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={handleRestart} 
+          className="rounded-full" 
           roughShape="circle"
           stroke={isDark ? "#ffffff" : "#000000"}
         >
           <RotateCcw className="h-[1.2rem] w-[1.2rem]" />
           <span className="sr-only">Reset Quiz</span>
         </Button>
-        {/* 
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setIsUploadModalOpen(true)}
-          className="rounded-full"
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={() => setIsUploadModalOpen(true)} 
+          className="rounded-full" 
           roughShape="circle"
           stroke={isDark ? "#ffffff" : "#000000"}
         >
           <Upload className="h-[1.2rem] w-[1.2rem]" />
           <span className="sr-only">Upload Questions</span>
         </Button>
-        */}
         <ThemeToggle />
       </div>
 
       {/* Main Content Wrapper - Centered and Width Constrained */}
-      <div className="flex-1 flex flex-col justify-center w-full max-w-5xl mx-auto p-6 md:p-10 z-10 relative">
+      <div className="flex-1 flex flex-col justify-center w-full max-w-4xl mx-auto p-6 md:p-12 z-10 relative">
+
         <div className="animate-in slide-in-from-bottom-8 duration-500 w-full">
           {/* Progress & Statistics */}
-          <div className="mb-6 flex justify-between items-end border-b-2 border-border/60 pb-3">
+          <div className="mb-8 flex justify-between items-end border-b-2 border-border/60 pb-4">
             <div className="flex items-baseline gap-2">
               <span className="text-sm font-bold tracking-widest uppercase text-muted-foreground">
                 Question {currentQuestionIndex + 1}
@@ -243,7 +220,7 @@ export function QuizApp() {
                 of {totalQuestions}
               </span>
             </div>
-
+            
             <div className="flex gap-4 items-center">
               <div className="flex items-center gap-1.5">
                 <Check className="w-4 h-4 text-muted-foreground" />
@@ -257,32 +234,14 @@ export function QuizApp() {
           </div>
 
           {/* Question Text */}
-          <div className="min-h-[100px] flex items-center mb-6">
+          <div className="min-h-[120px] flex items-center mb-8">
             <h2 className="text-3xl md:text-5xl font-bold leading-tight text-foreground drop-shadow-sm">
               {currentQuestion?.question}
             </h2>
           </div>
 
-          {/* Question Image */}
-          {currentQuestion?.image && (
-            <div className="mb-6 flex justify-center w-full">
-              <RoughBox
-                shape="rounded"
-                cornerRadius={16}
-                roughness={1.5}
-                className="p-3 bg-secondary/10 overflow-hidden max-w-full"
-              >
-                <img
-                  src={`/src/assets/questions/images/${currentQuestion.image}`}
-                  alt="Question illustration"
-                  className="max-h-[250px] md:max-h-[350px] w-auto object-contain rounded-lg shadow-sm"
-                />
-              </RoughBox>
-            </div>
-          )}
-
           {/* Answers List */}
-          <div className="grid gap-4 mb-8">
+          <div className="grid gap-4 mb-12">
             {currentQuestion?.answers.map((answer, index) => {
               const isSelected = selectedAnswers.includes(index);
               const isCorrect = answer.isCorrect;
@@ -293,21 +252,21 @@ export function QuizApp() {
 
               if (isSubmitted) {
                 if (isCorrect) {
-                  strokeColor = "#22c55e";
-                  bgClass = "bg-green-500/20";
-                  textStyles = "text-foreground font-bold";
+                   strokeColor = "#22c55e";
+                   bgClass = "bg-green-500/20";
+                   textStyles = "text-foreground font-bold";
                 } else if (isSelected && !isCorrect) {
-                  strokeColor = "#ef4444";
-                  bgClass = "bg-destructive/20";
-                  textStyles = "text-foreground font-medium";
+                   strokeColor = "#ef4444"; // Explicit Red
+                   bgClass = "bg-destructive/20";
+                   textStyles = "text-foreground font-medium";
                 } else {
-                  strokeColor = "transparent";
-                  bgClass = "opacity-40 bg-secondary/40 grayscale";
+                   strokeColor = "transparent";
+                   bgClass = "opacity-40 bg-secondary/40 grayscale";
                 }
               } else if (isSelected) {
-                strokeColor = isDark ? "#ffffff" : "#000000";
-                bgClass = "bg-primary/20 shadow-md";
-                textStyles = "text-foreground font-medium";
+                 strokeColor = isDark ? "#ffffff" : "#000000"; // Explicit White/Black
+                 bgClass = "bg-primary/20 shadow-md";
+                 textStyles = "text-foreground font-medium";
               }
 
               return (
@@ -321,29 +280,29 @@ export function QuizApp() {
                   stroke={strokeColor}
                   seed={index + 1}
                   className={cn(
-                    "group relative p-4 cursor-pointer transition-all duration-200 rounded-2xl",
+                    "group relative p-5 cursor-pointer transition-all duration-200 rounded-2xl",
                     bgClass,
                     isSubmitted && "cursor-default"
                   )}
                 >
                   <div className="relative z-10 flex items-center w-full">
                     <Checkbox
-                      checked={isSelected}
-                      onCheckedChange={() => !isSubmitted && handleAnswerToggle(index)}
-                      stroke={isSelected
-                        ? (isDark ? "#ffffff" : "#000000")
-                        : (isDark ? "#71717a" : "#a1a1aa")
-                      }
-                      className={cn(
+                        checked={isSelected}
+                        onCheckedChange={() => !isSubmitted && handleAnswerToggle(index)}
+                        stroke={isSelected
+                            ? (isDark ? "#ffffff" : "#000000")
+                            : (isDark ? "#71717a" : "#a1a1aa")
+                        }
+                        className={cn(
                         "mr-5 h-5 w-5",
                         isSubmitted && "pointer-events-none"
-                      )}
+                        )}
                     />
                     <span className={cn(
-                      "text-lg md:text-2xl transition-colors flex-1 leading-snug",
-                      textStyles
+                        "text-lg md:text-2xl transition-colors flex-1 leading-snug",
+                        textStyles
                     )}>
-                      {answer.text}
+                        {answer.text}
                     </span>
                   </div>
                 </RoughBox>
@@ -358,37 +317,35 @@ export function QuizApp() {
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-2 pointer-events-none"
           )}>
-            <Button
-              onClick={isSubmitted ? handleNext : handleSubmit}
-              disabled={!isSubmitted && selectedAnswers.length === 0}
-              tabIndex={(selectedAnswers.length > 0 || isSubmitted) ? 0 : -1}
-              variant="secondary"
-              size="lg"
-              roughShape="rounded"
-              roughCornerRadius={16}
-              stroke="currentColor"
-              className={cn(
-                "w-full md:w-auto min-w-[200px] h-14 text-lg rounded-2xl transition-transform active:scale-95 duration-300 shadow-sm border-2 border-transparent font-semibold tracking-wide",
-                isSubmitted && "font-bold"
-              )}
-            >
-              {isSubmitted ? (
-                <span className="flex items-center gap-2">
-                  Next Question <ArrowRight className="h-5 w-5" />
-                </span>
-              ) : (
-                "Check Answer"
-              )}
-            </Button>
-          </div>
+                                                                           <Button
+                                                                            onClick={isSubmitted ? handleNext : handleSubmit}
+                                                                            disabled={!isSubmitted && selectedAnswers.length === 0}
+                                                                            tabIndex={(selectedAnswers.length > 0 || isSubmitted) ? 0 : -1}
+                                                                            variant="secondary"
+                                                                            size="lg"
+                                                                            roughShape="rounded"
+                                                                            roughCornerRadius={16}
+                                                                            stroke="currentColor"
+                                                                                            className={cn(
+                                                                                              "w-full md:w-auto min-w-[200px] h-16 text-lg rounded-2xl transition-transform active:scale-95 duration-300 shadow-sm border-2 border-transparent font-semibold tracking-wide",
+                                                                                              isSubmitted && "font-bold"
+                                                                                            )}              >                {isSubmitted ? (
+                  <span className="flex items-center gap-2">
+                    Next Question <ArrowRight className="h-5 w-5" />
+                  </span>
+                ) : (
+                  "Check Answer"
+                )}
+              </Button>
+            </div>
+
         </div>
       </div>
-      {isUploadModalOpen && (
-        <QuestionUploadModal
-          onUpload={onQuestionsUploaded}
-          onClose={totalQuestions > 0 ? () => setIsUploadModalOpen(false) : undefined}
-        />
-      )}
-    </div>
+              {isUploadModalOpen && (
+                <QuestionUploadModal 
+                  onUpload={onQuestionsUploaded} 
+                  onClose={totalQuestions > 0 ? () => setIsUploadModalOpen(false) : undefined}
+                />
+              )}    </div>
   );
 }

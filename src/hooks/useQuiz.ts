@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import type { Question } from "@/types/quiz";
-import { ALL_QUESTIONS } from "@/assets/questions";
 
 interface UseQuizReturn {
   currentQuestion: Question | null;
@@ -11,13 +10,11 @@ interface UseQuizReturn {
   score: number;
   wrongQuestions: Question[];
   isSubmitted: boolean;
-  isShuffled: boolean;
   handleAnswerToggle: (answerIndex: number) => void;
   handleSubmit: () => void;
   handleNext: () => void;
   handleRestart: () => void;
   handleRetryWrong: () => void;
-  toggleShuffling: () => void;
   loadQuestions: (newQuestions: Question[]) => void;
   progress: number;
 }
@@ -32,25 +29,9 @@ function shuffleArray<T>(array: T[]): T[] {
   return newArray;
 }
 
-function prepareQuestions(qs: Question[], shouldShuffleQuestions: boolean): Question[] {
-  // Map and shuffle answers for each question
-  let prepared = qs.map((q) => ({
-    ...q,
-    answers: shuffleArray(q.answers),
-  }));
-
-  // Optionally shuffle the order of questions
-  if (shouldShuffleQuestions) {
-    prepared = shuffleArray(prepared);
-  }
-
-  return prepared;
-}
-
 export function useQuiz(): UseQuizReturn {
-  const [isShuffled, setIsShuffled] = useState(false);
-  const [baseQuestions, setBaseQuestions] = useState<Question[]>(ALL_QUESTIONS);
-  const [questions, setQuestions] = useState<Question[]>(prepareQuestions(ALL_QUESTIONS, false));
+  const [baseQuestions, setBaseQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [score, setScore] = useState(0);
@@ -58,8 +39,7 @@ export function useQuiz(): UseQuizReturn {
   const [isFinished, setIsFinished] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Load from localStorage on mount - DISABLED for static questions
-  /*
+  // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem("quiz_questions");
     if (saved) {
@@ -74,7 +54,6 @@ export function useQuiz(): UseQuizReturn {
       }
     }
   }, []);
-  */
 
   const currentQuestion = questions[currentQuestionIndex] || null;
 
@@ -124,46 +103,40 @@ export function useQuiz(): UseQuizReturn {
   }, [currentQuestionIndex, questions.length]);
 
   const handleRestart = useCallback(() => {
-    setQuestions(prepareQuestions(baseQuestions, isShuffled));
+    setQuestions(shuffleArray(baseQuestions));
     setCurrentQuestionIndex(0);
     setSelectedAnswers([]);
     setScore(0);
     setWrongQuestions([]);
     setIsFinished(false);
     setIsSubmitted(false);
-  }, [baseQuestions, isShuffled]);
+  }, [baseQuestions]);
 
   const handleRetryWrong = useCallback(() => {
     if (wrongQuestions.length === 0) {
       handleRestart();
       return;
     }
-    // Note: wrongQuestions already contains the shuffled versions from the last attempt, 
-    // but prepareQuestions will reshuffle them again.
-    setQuestions(prepareQuestions(wrongQuestions, isShuffled));
+    setQuestions(shuffleArray(wrongQuestions));
     setCurrentQuestionIndex(0);
     setSelectedAnswers([]);
     setScore(0);
     setWrongQuestions([]);
     setIsFinished(false);
     setIsSubmitted(false);
-  }, [wrongQuestions, handleRestart, isShuffled]);
-
-  const toggleShuffling = useCallback(() => {
-    setIsShuffled((prev) => !prev);
-  }, []);
+  }, [wrongQuestions, handleRestart]);
 
   const loadQuestions = useCallback((newQuestions: Question[]) => {
-    // localStorage.setItem("quiz_questions", JSON.stringify(newQuestions));
+    localStorage.setItem("quiz_questions", JSON.stringify(newQuestions));
     setBaseQuestions(newQuestions);
-    setQuestions(prepareQuestions(newQuestions, isShuffled));
+    setQuestions(shuffleArray(newQuestions));
     setCurrentQuestionIndex(0);
     setSelectedAnswers([]);
     setScore(0);
     setWrongQuestions([]);
     setIsFinished(false);
     setIsSubmitted(false);
-  }, [isShuffled]);
+  }, []);
 
   return {
     currentQuestion,
@@ -174,13 +147,11 @@ export function useQuiz(): UseQuizReturn {
     score,
     wrongQuestions,
     isSubmitted,
-    isShuffled,
     handleAnswerToggle,
     handleSubmit,
     handleNext,
     handleRestart,
     handleRetryWrong,
-    toggleShuffling,
     loadQuestions,
     progress: (currentQuestionIndex / (questions.length || 1)) * 100,
   };
